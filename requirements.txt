@@ -3,3 +3,4 @@ plotly
 palmerpenguins
 pyarrow
 shinylive
+reactive
