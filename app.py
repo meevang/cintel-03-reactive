@@ -47,14 +47,14 @@ with ui.layout_columns():
         ui.card_header("Penguins Data Table")
         @render.data_frame
         def penguins_datatable():
-            return render.DataTable(penguins, height='400px')
+            return render.DataTable(data=filtered_data(), height='400px')
     
     # Second column: Data Grid
     with ui.card():
         ui.card_header("Penguins Data Grid")
         @render.data_frame
         def penguins_datagrid():
-            return render.DataGrid(penguins, width='100%', height='400px')
+            return render.DataGrid(data=filtered_data(), width='100%', height='400px')
 
 
 with ui.layout_columns():
@@ -63,7 +63,7 @@ with ui.layout_columns():
         
         @render_plotly
         def plotly_histogram():
-            return px.histogram(penguins, x="body_mass_g", color="species", 
+            return px.histogram(filtered_data(), x="body_mass_g", color="species", 
                                  title="Penguin Body Mass by Species",
                                  labels={"body_mass_g": "Body Mass (g)", "count": "Count"},
                                  marginal="box")
@@ -74,7 +74,7 @@ with ui.layout_columns():
         @render.plot
         def seaborn_histogram():
             fig, ax = plt.subplots(figsize=(10, 6))
-            sns.histplot(data=penguins, x="body_mass_g", hue="species", multiple="stack", ax=ax)
+            sns.histplot(data=filtered_data(), x="body_mass_g", hue="species", multiple="stack", ax=ax)
             ax.set_title("Penguin Body Mass by Species")
             ax.set_xlabel("Body Mass (g)")
             ax.set_ylabel("Count")
@@ -85,7 +85,7 @@ with ui.card(full_screen=True):
 
     @render_plotly
     def plotly_scatterplot():
-        fig = px.scatter(penguins, 
+        fig = px.scatter(data=filtered_data(), 
                      x="flipper_length_mm", 
                      y="bill_length_mm", 
                      color="species",
@@ -114,5 +114,5 @@ with ui.card(full_screen=True):
 
 @reactive.calc
 def filtered_data():
-    return penguins_df
+    return penguins
 
